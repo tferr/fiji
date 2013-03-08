@@ -95,9 +95,9 @@ public class LogDetectorConfigurationPanel extends ConfigurationPanel {
 		if (imp != null) {
 			Calibration calibration = imp.getCalibration();
 			double maxWidth = imp.getWidth() * 0.5 * (calibration == null ? 1 : calibration.pixelWidth);
-			if (diameter > maxWidth) diameter = maxWidth;
 			double maxHeight = imp.getHeight() * 0.5 * (calibration == null ? 1 : calibration.pixelHeight);
-			if (diameter > maxHeight) diameter = maxHeight;
+			double max = maxWidth < maxHeight ? maxWidth : maxHeight;
+			if (diameter > max) diameter *= max * 4 / (imp.getWidth() + imp.getHeight());
 		}
 		jTextFieldBlobDiameter.setText(""+( 2 * diameter));
 		jCheckBoxMedianFilter.setSelected((Boolean) settings.get(KEY_DO_MEDIAN_FILTERING));
