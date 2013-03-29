@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.SwingUtilities;
+
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import fiji.plugin.trackmate.Spot;
@@ -147,7 +149,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 		if (null == displayer)
 			return;
 
-		final Spot clickLocation = makeSpot(imp, displayer, e.getPoint());
+		final Spot clickLocation = makeSpot(imp, displayer, getImageCanvas(e), e.getPoint());
 		final int frame = displayer.imp.getFrame() - 1;
 		final TrackMateModel model = displayer.getModel();
 		Spot target = model.getFilteredSpots().getSpotAt(clickLocation, frame);
@@ -367,6 +369,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 
 		TrackMateModel model = displayer.getModel();
 		Spot editedSpot = editedSpots.get(imp);
+		final ImageCanvas canvas = getImageCanvas(e);
 
 		int keycode = e.getKeyCode(); 
 
@@ -429,7 +432,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 					}
 				}
 
-				Spot newSpot = makeSpot(imp, displayer, null);
+				Spot newSpot = makeSpot(imp, displayer, canvas, null);
 				double zpos = (displayer.imp.getSlice()-1) * displayer.calibration[2];
 				int frame = displayer.imp.getFrame() - 1;
 				newSpot.putFeature(Spot.POSITION_T, frame * displayer.settings.dt);
@@ -459,7 +462,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 			if (null == editedSpot) {
 
 				int frame = displayer.imp.getFrame() - 1;
-				Spot clickLocation = makeSpot(imp, displayer, null);
+				Spot clickLocation = makeSpot(imp, displayer, canvas, null);
 				Spot target = model.getFilteredSpots().getSpotAt(clickLocation, frame);
 				if (null == target) {
 					e.consume(); // Consume it anyway, so that we are not bothered by IJ
@@ -487,7 +490,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 
 			if (null == quickEditedSpot) {
 				int frame = displayer.imp.getFrame() - 1;
-				Spot clickLocation = makeSpot(imp, displayer, null);
+				Spot clickLocation = makeSpot(imp, displayer, canvas, null);
 				quickEditedSpot = model.getFilteredSpots().getSpotAt(clickLocation, frame);
 				if (null == quickEditedSpot) {
 					return; // un-consumed event
@@ -506,7 +509,7 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 			if (null == editedSpot) {
 
 				int frame = displayer.imp.getFrame() - 1;
-				Spot clickLocation = makeSpot(imp, displayer, null);
+				Spot clickLocation = makeSpot(imp, displayer, canvas, null);
 				Spot target = model.getFilteredSpots().getSpotAt(clickLocation, frame);
 				if (null == target) {
 					return;
@@ -608,15 +611,15 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 
 	}
 
-	private Spot makeSpot(ImagePlus imp, HyperStackDisplayer displayer, Point mouseLocation) {
+	private Spot makeSpot(ImagePlus imp, HyperStackDisplayer displayer, ImageCanvas canvas, Point mouseLocation) {
 		if (displayer == null) {
 			displayer = displayers.get(imp);
 		}
 		if (mouseLocation == null) {
 			mouseLocation = MouseInfo.getPointerInfo().getLocation();
+			SwingUtilities.convertPointFromScreen(mouseLocation, canvas);
 		}
 		final double[] calibration = displayer.calibration;
-		final ImageCanvas canvas = imp.getWindow().getCanvas();
 		return new Spot(new double[] {
 				canvas.offScreenXD(mouseLocation.x) * calibration[0],
 				canvas.offScreenYD(mouseLocation.y) * calibration[1],
