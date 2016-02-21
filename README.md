@@ -1,11 +1,15 @@
-This is Fiji
-============
+[![](http://jenkins.imagej.net/job/Fiji/lastBuild/badge/icon)](http://jenkins.imagej.net/job/Fiji/)
+[![Join the chat at https://gitter.im/fiji/fiji](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fiji/fiji?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [ Fiji Is Just ImageJ ]
+=======================
 
-Fiji is a distribution of [ImageJ](http://imagej.net/), a popular, free
-scientific image processing application. Fiji adds a couple of plugins
-that are useful to life scientists analysing images.
+Fiji is a "batteries-included" distribution of
+[ImageJ](http://imagej.net/)—a popular, free scientific image processing
+application—which includes a lot of plugins organized into a coherent
+menu structure. Fiji compares to ImageJ as Ubuntu compares to Linux.
+
+The main focus of Fiji is to assist research in life sciences.
 
 At the moment, the following platforms are supported:
 
@@ -68,6 +72,8 @@ Participating
 [Pull Requests](https://help.github.com/articles/using-pull-requests)
 are very welcome!
 
+See the [Contributing](http://imagej.net/Contributing) page of the ImageJ wiki.
+
 Authors
 -------
 
@@ -75,8 +81,7 @@ Fiji was created and is maintained by Johannes Schindelin, ImageJ 1.x
 was created and is maintained by Wayne Rasband, ImageJ2 was created and
 is maintained and actively developed by Curtis Rueden. For a list of
 most recent contributors, please refer to the
-[Contributors](http://imagej.net/Contributors) page of the Fiji/ImageJ
-wiki.
+[Contributors](http://imagej.net/Contributors) page of the ImageJ wiki.
 
 Thanks
 ------
@@ -86,7 +91,7 @@ developer of ImageJ 1.x; he also fosters an active and friendly
 community around ImageJ.
 
 We are especially grateful to be part of an outstanding
-[community](http://imagej.net/Mailing_Lists) who is active, friendly and
+[community](http://imagej.net/Community) who is active, friendly and
 helping to scientists understanding and analysing images every day.
 
 Oh, and Fiji is also an island. We just wanted to let you know.
